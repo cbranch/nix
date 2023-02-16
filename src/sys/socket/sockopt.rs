@@ -1000,6 +1000,43 @@ sockopt_impl!(
     libc::IPV6_DONTFRAG,
     bool
 );
+#[cfg(any(target_os = "android", target_os = "linux"))]
+#[cfg(feature = "net")]
+sockopt_impl!(
+    #[cfg_attr(docsrs, doc(cfg(feature = "net")))]
+    /// This option enables Fast Open (RFC7413) on a listener socket. The
+    /// value specifies the maximum length of pending SYNs.
+    TcpFastOpen,
+    Both,
+    libc::IPPROTO_TCP,
+    libc::TCP_FASTOPEN,
+    libc::c_int
+);
+#[cfg(any(target_os = "android", target_os = "linux"))]
+#[cfg(feature = "net")]
+sockopt_impl!(
+    #[cfg_attr(docsrs, doc(cfg(feature = "net")))]
+    /// This boolean option enables an alternative way to perform Fast Open
+    /// (RFC7413) on a client socket. It modifies the behaviour of `connect(2)`
+    /// depending on if a Fast Open cookie is available for the destination.
+    TcpFastOpenConnect,
+    Both,
+    libc::IPPROTO_TCP,
+    libc::TCP_FASTOPEN_CONNECT,
+    bool
+);
+#[cfg(any(target_os = "android", target_os = "linux"))]
+#[cfg(feature = "net")]
+sockopt_impl!(
+    #[cfg_attr(docsrs, doc(cfg(feature = "net")))]
+    /// This boolean option enables Fast Open (RFC7413) without requiring a
+    /// previously-stored cookie.
+    TcpFastOpenNoCookie,
+    Both,
+    libc::IPPROTO_TCP,
+    libc::TCP_FASTOPEN_NO_COOKIE,
+    bool
+);
 
 #[allow(missing_docs)]
 // Not documented by Linux!
